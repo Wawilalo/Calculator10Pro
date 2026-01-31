@@ -1,0 +1,286 @@
+
+
+/* Сделать весь текст на сайте чёрным — переопределяет Bootstrap .text-light */
+body {
+    color: #000 !important;
+}
+
+/* На случай, если где-то применяется утилита .text-light */
+.text-light {
+    color: #000000 !important;
+}
+
+/* Сделать все кнопки визуально равными: одинаковая высота, радиус, размер шрифта и выравнивание */
+.btn {
+    height: 48px; /* фиксированная высота */
+    min-height: 48px;
+    font-size: 1rem;
+    border-radius: 10px !important;
+    padding: 0 14px; /* горизонтальные отступы будут контролировать ширину при отсутствии flex-grow */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Для кнопок, которые растягиваются по ширине, сохранить поведение, но сохранить высоту */
+.d-flex .btn {
+    height: 48px;
+}
+
+/* Немного унифицировать кнопку submit, чтобы она выглядела так же по высоте */
+#Calculator .btn.w-100 {
+    height: 48px;
+    padding: 0 14px;
+}
+
+/* Немного уменьшить контраст для outline-variant, чтобы он выглядел аккуратно */
+.btn-outline-info {
+    padding: 0 14px;
+}
+
+.settings-btn1, .settings-btn2, .settings-btn3 {
+    width: 100%;
+    height: 40px;
+    margin: 10px 0;
+    display: flex;
+    justify-content:center;
+    gap: 10px;
+    
+
+}
+
+/* --- Windows11-like taskbar, Start menu and app window styles --- */
+.taskbar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 12px;
+    z-index: 900;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+}
+.taskbar-inner {
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(8px);
+    padding: 8px 18px;
+    border-radius: 14px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.28);
+}
+.taskbar .start-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background: transparent;
+    color: #fff;
+}
+
+/* Make Start button look modern and attractive */
+.start-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background: rgba(255,255,255,0.06); /* glass */
+    color: #fff;
+    box-shadow: 0 6px 20px rgba(2,6,23,0.45);
+    transition: transform .16s cubic-bezier(.2,.9,.2,1), box-shadow .16s ease, background .16s ease;
+    backdrop-filter: blur(8px) saturate(120%);
+    border: 1px solid rgba(255,255,255,0.06);
+}
+.start-btn svg { width:22px; height:22px }
+.start-btn .win-rect { fill: rgba(255,255,255,0.95); }
+.start-btn:hover { transform: translateY(-3px); background: rgba(255,255,255,0.08); box-shadow: 0 12px 30px rgba(2,6,23,0.5); }
+.start-btn:active { transform: translateY(0) scale(0.995); }
+.start-btn:focus { outline: none; box-shadow: 0 0 0 6px rgba(99,102,241,0.08); }
+
+/* Highlight when Start menu is open: blue glow like Windows 11 */
+.start-active { background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04)); box-shadow: 0 10px 36px rgba(12,18,36,0.5), 0 0 0 6px rgba(59,130,246,0.12); transform: translateY(-2px); }
+
+/* Slightly smaller icon on small screens */
+@media (max-width:420px) {
+    .start-btn { width:48px; height:48px }
+    .task-icon { width:48px; height:48px }
+    .start-btn svg { width:18px; height:18px }
+}
+.taskbar-center { display:flex; gap:10px; align-items:center }
+.task-icon { width:56px; height:56px; border-radius:12px; display:flex; align-items:center; justify-content:center; background:transparent; color:#fff }
+
+.start-menu {
+    position: fixed;
+    bottom: 110px; /* lift the menu slightly above the taskbar so it grows upward */
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(1400px, 92vw); /* slightly narrower per user request */
+    z-index: 950;
+    color: #0f172a;
+    border-radius: 16px;
+    box-shadow: 0 18px 50px rgba(2,6,23,0.45);
+}
+.start-menu { opacity: 0; transform-origin: center bottom; transform: translateX(-50%) translateY(8px) scale(0.98); transition: opacity 180ms ease, transform 180ms cubic-bezier(.2,.9,.2,1); }
+.start-menu.open { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+
+/* Start menu internals: pinned grid and recommended */
+.start-menu-inner {
+    padding: 26px 28px;
+    width: 100%;
+    max-width: calc(100% - 32px);
+    max-height: 82vh; /* increase vertical room so menu is taller */
+    min-height: 480px; /* ensure noticeable height even on smaller viewports */
+    overflow: auto;
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)),
+                radial-gradient(600px 200px at 10% 10%, rgba(99,102,241,0.06), transparent 10%),
+                radial-gradient(400px 140px at 90% 90%, rgba(16,185,129,0.03), transparent 8%);
+    backdrop-filter: blur(20px) saturate(140%);
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,0.06);
+}
+.start-top { display:flex; gap:14px }
+.pinned { flex: 1 }
+/* hide big section titles to avoid 'виступающий' prominent text */
+.pinned-title { display:none }
+.pinned-grid { display:grid; grid-template-columns: repeat(8, 1fr); gap:18px; grid-auto-rows: 140px; align-items: start }
+.start-tile {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+    padding:12px;
+    border-radius:14px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border: 1px solid rgba(255,255,255,0.03);
+    color:#0f172a;
+    cursor:pointer;
+    transition: transform .18s cubic-bezier(.2,.9,.2,1), box-shadow .18s ease, background .18s ease;
+}
+.start-tile .tile-icon {
+    width:48px; height:48px; border-radius:12px; display:flex; align-items:center; justify-content:center;
+    background: linear-gradient(135deg, #60a5fa, #38bdf8);
+    color: #07203a; font-weight:700; box-shadow: 0 12px 28px rgba(2,6,23,0.28);
+}
+.start-tile .tile-label { font-size:13px; color: #0f172a; margin-top:8px; font-weight:600 }
+
+/* Accent helpers: can be applied later as data-accent or classes on tiles */
+.start-tile.accent-green .tile-icon { background: linear-gradient(135deg,#34d399,#10b981) }
+.start-tile.accent-purple .tile-icon { background: linear-gradient(135deg,#a78bfa,#7c3aed) }
+.start-tile.accent-orange .tile-icon { background: linear-gradient(135deg,#fb923c,#f97316) }
+.start-tile.accent-red .tile-icon { background: linear-gradient(135deg,#f87171,#ef4444) }
+.start-tile:hover { transform: translateY(-8px); box-shadow: 0 18px 42px rgba(2,6,23,0.5); }
+.start-tile:hover { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(2,6,23,0.6); background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); }
+.start-tile:active { transform: translateY(-2px) }
+
+/* Staggered entrance animation for tiles */
+.start-tile { opacity:0; transform: translateY(8px) scale(.995); }
+.start-menu.open .start-tile { opacity:1; transform: translateY(0) scale(1); }
+.start-menu.open.opening .start-tile { animation: tileIn 320ms cubic-bezier(.2,.9,.2,1) both; animation-delay: calc(var(--i) * 68ms); }
+@keyframes tileIn {
+    from { opacity: 0; transform: translateY(10px) scale(.98) }
+    to { opacity: 1; transform: translateY(0) scale(1) }
+}
+
+.recommended { width: 420px }
+.recommended-title { display:none }
+.recommended-list { background: transparent; color:#dbeafe; border-radius:8px; padding:6px }
+.rec-item { font-size:13px; color:#94a3b8; padding:6px 8px; border-radius:6px; }
+
+.start-footer { display:flex; justify-content:space-between; align-items:center; margin-top:12px }
+.start-footer .btn { padding:6px 10px }
+
+/* small screens: menu width smaller */
+@media (max-width:520px) {
+    .start-menu-inner { width: calc(100% - 32px) }
+    .pinned-grid { grid-template-columns: repeat(3, 1fr) }
+}
+.start-menu-inner { padding:12px }
+.start-section-title { font-weight:600; margin-bottom:8px }
+.start-app-list { display:flex; flex-direction:column; gap:8px }
+.start-app-item { text-align:left }
+.start-footer { margin-top:10px; font-size:13px; color:#666 }
+
+.app-window {
+    width: 720px;
+    max-width: calc(100% - 48px);
+    border-radius: 12px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    overflow: hidden;
+    /* make window slightly translucent so there is no big white band on sides */
+    background: rgba(255,255,255,0.06);
+    color: #000;
+}
+
+.app-window .app-body { padding: 12px; }
+
+/* Titlebar */
+.app-titlebar {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:8px 12px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+.app-title { font-weight:600 }
+.app-controls { display:flex; gap:6px }
+.wnd-btn { width:34px; height:28px; border-radius:6px; border:none; background:transparent; color:#fff; cursor:pointer }
+.wnd-btn:hover { background: rgba(255,255,255,0.06) }
+.wnd-min { color:#ffd43b }
+.wnd-close { color:#ff6b6b }
+
+/* Minimized state: hide body but keep titlebar visible */
+.app-window.minimized .app-body { display:none }
+
+/* When app window contains #Calculator keep its internal styles; ensure its buttons look correct on light bg */
+.app-window .btn { background: transparent }
+
+/* Shutdown / boot screen styles */
+.shutdown-screen {
+        position: fixed;
+        inset: 0;
+        background: #000;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 20000;
+        transition: opacity 600ms ease, background-color 400ms ease;
+}
+.shutdown-inner { text-align:center }
+.shutdown-msg { font-size:28px; margin-bottom:12px; opacity:0.0; transition: opacity 400ms ease; }
+.shutdown-screen.visible .shutdown-msg { opacity:1 }
+.boot-progress { width:320px; height:10px; background: rgba(255,255,255,0.08); border-radius:6px; margin: 8px auto; overflow:hidden }
+.boot-bar { height:100%; background: linear-gradient(90deg,#4ade80,#60a5fa); width:0%; transition: width 200ms linear }
+
+/* Spinner for shutdown sequence */
+.shutdown-spinner {
+    width:72px; height:72px; margin: 12px auto; border-radius:50%; position:relative;
+    box-shadow: inset 0 0 24px rgba(255,255,255,0.06), 0 8px 20px rgba(2,6,23,0.6);
+}
+.shutdown-spinner:before, .shutdown-spinner:after {
+    content:''; position:absolute; inset:8px; border-radius:50%;
+}
+.shutdown-spinner:before { border:6px solid rgba(255,255,255,0.06); }
+.shutdown-spinner:after { border:6px solid transparent; border-top-color:#60a5fa; animation: spin 1.2s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Fade-to-black effect for a more realistic shutdown */
+.shutdown-screen.off { background: #000; }
+
+/* Small boot message styles */
+.shutdown-inner .boot-line { font-family: monospace; font-size:13px; color: #9aa4b2; opacity: 0.0; transition: opacity 300ms ease; }
+.shutdown-inner .boot-line.visible { opacity: 1; }
+
+/* Desktop boot-in animation */
+.desktop-booting { animation: desktopFadeIn 900ms ease both }
+@keyframes desktopFadeIn {
+    from { opacity: 0; transform: scale(0.99) }
+    to   { opacity: 1; transform: scale(1) }
+}
